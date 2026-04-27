@@ -7,7 +7,12 @@ from datetime import datetime, timedelta
 import os
 import json
 
-def create_app(config_name='development'):
+def get_locale():
+    if 'language' in session:
+        return session['language']
+    return request.accept_languages.best_match(['en', 'fr', 'es', 'de', 'pt', 'zh']) or 'en'
+
+def create_app(config_name='production'):
     """Application factory."""
     app = Flask(__name__)
     app.config.from_object(config[config_name])
@@ -18,15 +23,10 @@ def create_app(config_name='development'):
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
     
-    babel = Babel(app, locale_selector=lambda: get_locale(app))
+    babel = Babel(app, locale_selector=get_locale)
     
     # Create upload folder
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-    
-    def get_locale(app):
-        if 'language' in session:
-            return session['language']
-        return request.accept_languages.best_match(app.config['LANGUAGES'].keys()) or 'en'
     
     @login_manager.user_loader
     def load_user(user_id):
@@ -83,7 +83,7 @@ def create_app(config_name='development'):
     
     # Create database tables
     with app.app_context():
-        db.create_all()
+        db.create_all(checkfirst=True)
         create_demo_account()
     
     return app
