@@ -18,13 +18,12 @@ def create_app(config_name='development'):
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
     
-    babel = Babel(app)
+    babel = Babel(app, locale_selector=lambda: get_locale(app))
     
     # Create upload folder
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     
-    @babel.localeselector
-    def get_locale():
+    def get_locale(app):
         if 'language' in session:
             return session['language']
         return request.accept_languages.best_match(app.config['LANGUAGES'].keys()) or 'en'
