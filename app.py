@@ -83,7 +83,7 @@ def create_app(config_name='production'):
     
     # Create database tables
     with app.app_context():
-        db.create_all(checkfirst=True)
+        db.create_all()
         create_demo_account()
     
     return app
