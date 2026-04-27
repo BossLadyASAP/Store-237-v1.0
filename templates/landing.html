@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="{{ get_locale() }}" data-theme="{{ session.get('theme', 'light') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store 237 - Retail Management Made Simple</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Store 237 Logo" class="logo-img">
+                <span class="logo-text">Store 237</span>
+            </div>
+            
+            <div class="nav-controls">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <select id="language-select" onchange="changeLanguage(this.value)">
+                        <option value="en" {% if get_locale() == 'en' %}selected{% endif %}>English</option>
+                        <option value="fr" {% if get_locale() == 'fr' %}selected{% endif %}>Français</option>
+                        <option value="es" {% if get_locale() == 'es' %}selected{% endif %}>Español</option>
+                        <option value="de" {% if get_locale() == 'de' %}selected{% endif %}>Deutsch</option>
+                        <option value="pt" {% if get_locale() == 'pt' %}selected{% endif %}>Português</option>
+                        <option value="zh" {% if get_locale() == 'zh' %}selected{% endif %}>中文</option>
+                    </select>
+                </div>
+                
+                <!-- Dark Mode Toggle -->
+                <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="{{ _('Toggle Dark Mode') }}">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                
+                <a href="{{ url_for('auth.login') }}" class="btn btn-primary">{{ _('Sign In') }}</a>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Store 237 Logo" class="hero-logo">
+                <h1>{{ _('Retail Management Made Simple') }}</h1>
+                <p>{{ _('Store 237 is your all-in-one platform for managing sales, inventory, analytics, and team collaboration. Grow your retail business with confidence.') }}</p>
+                
+                <div class="hero-buttons">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">{{ _('Get Started Free') }}</a>
+                    <form method="POST" action="{{ url_for('auth.demo_login') }}" style="display: inline;">
+                        <button type="submit" class="btn btn-secondary btn-lg">{{ _('Test Demo') }}</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section class="features">
+            <h2>{{ _('Powerful Features') }}</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>{{ _('Real-time Analytics') }}</h3>
+                    <p>{{ _('Track sales, expenses, and profit/loss with live dashboards and detailed reports.') }}</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🛍️</div>
+                    <h3>{{ _('Point of Sale') }}</h3>
+                    <p>{{ _('Fast, intuitive POS system with cart management and instant receipt generation.') }}</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>{{ _('Inventory Management') }}</h3>
+                    <p>{{ _('Track product stock, set reorder levels, and manage inventory efficiently.') }}</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>{{ _('Team Collaboration') }}</h3>
+                    <p>{{ _('Invite team members with role-based permissions (Admin, Manager, Viewer).') }}</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>{{ _('Multi-Currency Support') }}</h3>
+                    <p>{{ _('Support 20+ currencies with automatic formatting and conversion.') }}</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>{{ _('Profit/Loss Tracking') }}</h3>
+                    <p>{{ _('Calculate profit margins, track gains and losses, and optimize pricing.') }}</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <h2>{{ _('What Our Users Say') }}</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p>"Store 237 has transformed how I manage my retail business. The analytics are incredibly useful!"</p>
+                    <p class="testimonial-author">- Sarah Johnson, Store Owner</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p>"The POS system is so fast and intuitive. My team loves using it every day."</p>
+                    <p class="testimonial-author">- Michael Chen, Manager</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p>"Finally, a platform that makes profit tracking easy. Highly recommended!"</p>
+                    <p class="testimonial-author">- Emma Davis, Entrepreneur</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pricing Section -->
+        <section class="pricing">
+            <h2>{{ _('Simple, Transparent Pricing') }}</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>{{ _('Starter') }}</h3>
+                    <p class="price">$29<span>/month</span></p>
+                    <ul>
+                        <li>{{ _('1 Store') }}</li>
+                        <li>{{ _('Up to 100 Products') }}</li>
+                        <li>{{ _('Basic Analytics') }}</li>
+                        <li>{{ _('Email Support') }}</li>
+                    </ul>
+                    <button class="btn btn-secondary">{{ _('Choose Plan') }}</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>{{ _('Professional') }}</h3>
+                    <p class="price">$79<span>/month</span></p>
+                    <ul>
+                        <li>{{ _('Unlimited Stores') }}</li>
+                        <li>{{ _('Unlimited Products') }}</li>
+                        <li>{{ _('Advanced Analytics') }}</li>
+                        <li>{{ _('Team Collaboration') }}</li>
+                        <li>{{ _('Priority Support') }}</li>
+                    </ul>
+                    <button class="btn btn-primary">{{ _('Choose Plan') }}</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>{{ _('Enterprise') }}</h3>
+                    <p class="price">{{ _('Custom') }}</p>
+                    <ul>
+                        <li>{{ _('Everything in Professional') }}</li>
+                        <li>{{ _('Custom Integration') }}</li>
+                        <li>{{ _('Dedicated Support') }}</li>
+                        <li>{{ _('SLA Guarantee') }}</li>
+                    </ul>
+                    <button class="btn btn-secondary">{{ _('Contact Sales') }}</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="cta">
+            <h2>{{ _('Ready to Transform Your Retail Business?') }}</h2>
+            <p>{{ _('Join thousands of retailers using Store 237 to manage their stores efficiently.') }}</p>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">{{ _('Start Free Trial') }}</a>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Store 237. {{ _('All rights reserved.') }}</p>
+            <p>{{ _('Retail Management Made Simple') }}</p>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/landing.js') }}"></script>
+</body>
+</html>
