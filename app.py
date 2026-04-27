@@ -25,6 +25,9 @@ def create_app(config_name='production'):
     
     babel = Babel(app, locale_selector=get_locale)
     
+    # Make get_locale available to templates
+    app.jinja_env.globals.update(get_locale=get_locale)
+    
     # Create upload folder
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     
